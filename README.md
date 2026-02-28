@@ -142,4 +142,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [FastAPI](https://fastapi.tiangolo.com/) - The awesome web framework
 - [Typer](https://typer.tiangolo.com/) - CLI framework
 - [SQLAlchemy](https://www.sqlalchemy.org/) - Database toolkit
-- [PROJECT_website](../PROJECT_website/backend) - Architecture reference
