@@ -17,6 +17,7 @@
 ## 阶段一：项目初始化 (Project Setup)
 
 ### Issue #1: 初始化 uv 项目结构
+
 - **状态**: ✅ DONE
 - **描述**: 使用 uv 创建项目基础结构，配置 pyproject.toml
 - **任务**:
@@ -28,6 +29,7 @@
 - **Git Commit**: `feat: initialize uv project structure with pyproject.toml`
 
 ### Issue #2: 实现基础 CLI 框架
+
 - **状态**: ✅ DONE
 - **描述**: 使用 Typer 搭建 CLI 基础框架
 - **任务**:
@@ -39,26 +41,28 @@
 - **Git Commit**: `feat: implement basic CLI framework with Typer`
 
 ### Issue #3: 实现交互式问答系统
-- **状态**: ⬜ TODO
+
+- **状态**: ✅ DONE
 - **描述**: 使用 Questionary 实现交互式项目配置
 - **任务**:
-  - [ ] 安装 Questionary 依赖
-  - [ ] 创建 `fastapi_forge/prompts.py` 问答模块
-  - [ ] 实现项目基础信息收集 (名称、描述、作者)
-  - [ ] 实现包管理器选择 (uv/Poetry/pip)
-  - [ ] 实现数据库选择 (PostgreSQL/MySQL/SQLite/None)
-  - [ ] 实现功能模块选择 (Auth/Docker/Redis 等)
+  - [x] 安装 Questionary 依赖
+  - [x] 创建 `fastapi_forge/prompts.py` 问答模块
+  - [x] 实现项目基础信息收集 (名称、描述、作者)
+  - [x] 实现包管理器选择 (uv/Poetry/pip)
+  - [x] 实现数据库选择 (PostgreSQL/MySQL/SQLite/None)
+  - [x] 实现功能模块选择 (Auth/Docker/Redis 等)
 - **Git Commit**: `feat: implement interactive prompts with Questionary`
 
 ### Issue #4: 创建项目配置数据模型
-- **状态**: ⬜ TODO
+
+- **状态**: ✅ DONE
 - **描述**: 使用 Pydantic 定义项目配置数据结构
 - **任务**:
-  - [ ] 创建 `fastapi_forge/models.py`
-  - [ ] 定义 `ProjectConfig` 数据类
-  - [ ] 定义 `DatabaseType` 枚举
-  - [ ] 定义 `PackageManager` 枚举
-  - [ ] 添加配置验证逻辑
+  - [x] 创建 `fastapi_forge/models.py`
+  - [x] 定义 `ProjectConfig` 数据类
+  - [x] 定义 `DatabaseType` 枚举
+  - [x] 定义 `PackageManager` 枚举
+  - [x] 添加配置验证逻辑
 - **Git Commit**: `feat: add ProjectConfig model with Pydantic`
 
 ---
@@ -66,6 +70,7 @@
 ## 阶段二：模板系统 (Template System)
 
 ### Issue #5: 创建 Jinja2 模板引擎
+
 - **状态**: ⬜ TODO
 - **描述**: 搭建模板渲染基础设施
 - **任务**:
@@ -76,6 +81,7 @@
 - **Git Commit**: `feat: implement Jinja2 template engine`
 
 ### Issue #6: 创建基础项目模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建核心项目文件模板
 - **任务**:
@@ -88,6 +94,7 @@
 - **Git Commit**: `feat: add base project templates`
 
 ### Issue #7: 创建 FastAPI 应用模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建 FastAPI 应用核心文件模板
 - **任务**:
@@ -101,6 +108,7 @@
 - **Git Commit**: `feat: add FastAPI application templates`
 
 ### Issue #8: 创建数据库模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建数据库相关文件模板
 - **任务**:
@@ -113,6 +121,7 @@
 - **Git Commit**: `feat: add database and Alembic templates`
 
 ### Issue #9: 创建认证模块模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建 JWT 认证相关文件模板
 - **任务**:
@@ -124,6 +133,7 @@
 - **Git Commit**: `feat: add JWT authentication templates`
 
 ### Issue #10: 创建 Docker 模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建 Docker 相关文件模板
 - **任务**:
@@ -134,6 +144,7 @@
 - **Git Commit**: `feat: add Docker configuration templates`
 
 ### Issue #11: 创建测试框架模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建 Pytest 测试相关文件模板
 - **任务**:
@@ -148,6 +159,7 @@
 ## 阶段三：核心命令实现 (Core Commands)
 
 ### Issue #12: 实现 `forge create` 命令
+
 - **状态**: ⬜ TODO
 - **描述**: 实现项目创建主命令
 - **任务**:
@@ -160,6 +172,7 @@
 - **Git Commit**: `feat: implement forge create command`
 
 ### Issue #13: 实现非交互模式
+
 - **状态**: ⬜ TODO
 - **描述**: 支持命令行参数跳过交互
 - **任务**:
@@ -176,6 +189,7 @@
 ## 阶段四：代码质量 (Quality Assurance)
 
 ### Issue #14: 添加 Ruff 配置模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建代码质量工具配置
 - **任务**:
@@ -184,6 +198,7 @@
 - **Git Commit**: `feat: add Ruff and pre-commit templates`
 
 ### Issue #15: 添加 GitHub Actions CI 模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建 CI/CD 配置模板
 - **任务**:
@@ -192,6 +207,7 @@
 - **Git Commit**: `feat: add GitHub Actions CI template`
 
 ### Issue #16: 添加 VS Code 配置模板
+
 - **状态**: ⬜ TODO
 - **描述**: 创建编辑器配置模板
 - **任务**:
@@ -204,6 +220,7 @@
 ## 阶段五：测试与文档 (Testing & Documentation)
 
 ### Issue #17: 编写 CLI 单元测试
+
 - **状态**: ⬜ TODO
 - **描述**: 为 CLI 工具编写测试
 - **任务**:
@@ -214,6 +231,7 @@
 - **Git Commit**: `test: add unit tests for CLI and generator`
 
 ### Issue #18: 完善项目文档
+
 - **状态**: ⬜ TODO
 - **描述**: 编写用户文档
 - **任务**:
@@ -229,6 +247,7 @@
 ## 阶段六：发布准备 (Release Preparation)
 
 ### Issue #19: 配置 PyPI 发布
+
 - **状态**: ⬜ TODO
 - **描述**: 准备 PyPI 发布流程
 - **任务**:
@@ -239,6 +258,7 @@
 - **Git Commit**: `chore: prepare for PyPI release`
 
 ### Issue #20: 发布 v0.1.0 MVP
+
 - **状态**: ⬜ TODO
 - **描述**: 发布首个 MVP 版本
 - **任务**:
@@ -252,22 +272,25 @@
 
 ## 📊 进度统计
 
-| 阶段 | 总任务 | 已完成 | 进度 |
-|------|--------|--------|------|
-| 项目初始化 | 4 | 2 | 50% |
-| 模板系统 | 7 | 0 | 0% |
-| 核心命令 | 2 | 0 | 0% |
-| 代码质量 | 3 | 0 | 0% |
-| 测试文档 | 2 | 0 | 0% |
-| 发布准备 | 2 | 0 | 0% |
-| **总计** | **20** | **2** | **10%** |
+| 阶段       | 总任务 | 已完成 | 进度    |
+| ---------- | ------ | ------ | ------- |
+| 项目初始化 | 4      | 4      | 100%    |
+| 模板系统   | 7      | 0      | 0%      |
+| 核心命令   | 2      | 0      | 0%      |
+| 代码质量   | 3      | 0      | 0%      |
+| 测试文档   | 2      | 0      | 0%      |
+| 发布准备   | 2      | 0      | 0%      |
+| **总计**   | **20** | **4**  | **20%** |
 
 ---
 
 ## 📝 开发日志
 
 ### 2026-02-28
+
 - 创建设计文档 `DESIGN.md`
 - 创建任务跟踪文档 `TODO.md`
 - ✅ 完成 Issue #1: 初始化 uv 项目结构
 - ✅ 完成 Issue #2: 实现基础 CLI 框架 (Typer + Rich)
+- ✅ 完成 Issue #3: 实现交互式问答系统 (Questionary)
+- ✅ 完成 Issue #4: 创建项目配置数据模型 (Pydantic)

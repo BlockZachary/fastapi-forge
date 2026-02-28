@@ -101,11 +101,11 @@ my-awesome-api/
 
 ## 🛠️ Commands
 
-| Command | Description |
-|---------|-------------|
+| Command               | Description                  |
+| --------------------- | ---------------------------- |
 | `forge create <name>` | Create a new FastAPI project |
-| `forge version` | Show version information |
-| `forge --help` | Show help message |
+| `forge version`       | Show version information     |
+| `forge --help`        | Show help message            |
 
 ## 🤖 AI Features (Coming Soon)
 

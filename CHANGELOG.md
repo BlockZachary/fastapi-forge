@@ -8,13 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial project structure
+
+- Initial project structure with uv package management
 - Design document (DESIGN.md)
 - Development task tracking (TODO.md)
+- CLI framework with Typer and Rich terminal output
+- `forge version` and `forge create` commands
+- Interactive prompts with Questionary for project configuration
+- `ProjectConfig` Pydantic model with validation
+- `PackageManager` enum (uv, poetry, pip)
+- `DatabaseType` enum (postgres, mysql, sqlite, none)
+- Non-interactive mode support (`-y` / `--no-interactive` flag)
+- Unit tests for CLI and models (20 tests passing)
 
 ## [0.1.0] - TBD
 
 ### Added
+
 - CLI framework with Typer
 - Interactive project creation with Questionary
 - Support for uv, Poetry, and pip package managers

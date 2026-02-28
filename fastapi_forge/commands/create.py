@@ -7,6 +7,16 @@ This module handles the 'forge create' command implementation.
 from rich.console import Console
 from rich.panel import Panel
 
+from fastapi_forge.models import (
+    DatabaseType,
+    PackageManager,
+    ProjectConfig,
+)
+from fastapi_forge.prompts import (
+    collect_project_config,
+    confirm_config,
+)
+
 console = Console()
 
 
@@ -29,37 +39,48 @@ def create_project(
         docker: Whether to generate Docker configuration
         no_interactive: Skip interactive prompts
     """
-    console.print(
-        Panel(
-            f"[bold cyan]🚀 FastAPI-Forge[/bold cyan] - Creating new project\n\n"
-            f"Project: [green]{project_name}[/green]",
-            title="Create Project",
-            border_style="cyan",
-        )
-    )
+    try:
+        if no_interactive:
+            # Non-interactive mode: use defaults or provided values
+            config = ProjectConfig(
+                project_name=project_name,
+                package_manager=PackageManager(package_manager or "uv"),
+                database=DatabaseType(database or "postgres"),
+                use_auth=auth if auth is not None else True,
+                use_docker=docker if docker is not None else True,
+                use_docker_compose=docker if docker is not None else True,
+            )
+        else:
+            # Interactive mode: collect configuration through prompts
+            try:
+                config = collect_project_config(project_name)
 
-    # TODO: Implement interactive prompts (Issue #3)
-    # TODO: Implement project generation (Issue #12)
+                # Ask for confirmation
+                if not confirm_config(config):
+                    console.print("\n[yellow]Project creation cancelled.[/yellow]")
+                    return
+            except KeyboardInterrupt:
+                return
 
-    if no_interactive:
-        # Use defaults or provided values
-        config = {
-            "project_name": project_name,
-            "package_manager": package_manager or "uv",
-            "database": database or "postgres",
-            "auth": auth if auth is not None else True,
-            "docker": docker if docker is not None else True,
-        }
-        console.print(f"\n📦 Using configuration: {config}")
-    else:
-        # Interactive mode - to be implemented
+        # Display confirmation
         console.print(
-            "\n[yellow]⚠️  Interactive mode not yet implemented.[/yellow]\n"
-            "Use [cyan]--no-interactive[/cyan] flag or wait for Issue #3.\n"
+            Panel(
+                f"[bold green]✅ Configuration ready![/bold green]\n\n"
+                f"Project: [cyan]{config.project_name}[/cyan]\n"
+                f"Slug: [cyan]{config.project_slug}[/cyan]\n"
+                f"Package Manager: [cyan]{config.package_manager.value}[/cyan]\n"
+                f"Database: [cyan]{config.database.value}[/cyan]",
+                title="Ready to Generate",
+                border_style="green",
+            )
         )
-        return
 
-    console.print(
-        "\n[yellow]⚠️  Project generation not yet implemented.[/yellow]\n"
-        "This will be completed in Issue #12.\n"
-    )
+        # TODO: Implement project generation (Issue #12)
+        console.print(
+            "\n[yellow]⚠️  Project generation not yet implemented.[/yellow]\n"
+            "This will be completed in Issue #12.\n"
+        )
+
+    except ValueError as e:
+        console.print(f"\n[red]❌ Error: {e}[/red]")
+        raise SystemExit(1)
