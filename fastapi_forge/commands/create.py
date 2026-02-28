@@ -81,10 +81,10 @@ def create_project(
         # Generate the project
         output_dir = Path.cwd() / config.project_slug
         generator = ProjectGenerator(config, output_dir)
-        
+
         with console.status("[bold blue]Generating project...[/bold blue]"):
             generated_files = generator.generate()
-        
+
         # Display success message
         console.print(
             Panel(
@@ -93,9 +93,9 @@ def create_project(
                 f"Files generated: [cyan]{len(generated_files)}[/cyan]\n\n"
                 f"[bold]Next steps:[/bold]\n"
                 f"  cd {config.project_slug}\n"
-                + (f"  uv sync\n" if config.package_manager == PackageManager.UV else "")
-                + (f"  poetry install\n" if config.package_manager == PackageManager.POETRY else "")
-                + (f"  pip install -r requirements.txt\n" if config.package_manager == PackageManager.PIP else "")
+                + ("  uv sync\n" if config.package_manager == PackageManager.UV else "")
+                + ("  poetry install\n" if config.package_manager == PackageManager.POETRY else "")
+                + ("  pip install -r requirements.txt\n" if config.package_manager == PackageManager.PIP else "")
                 + f"  {'uv run ' if config.package_manager == PackageManager.UV else 'poetry run ' if config.package_manager == PackageManager.POETRY else ''}uvicorn app.main:app --reload",
                 title="Success",
                 border_style="green",
@@ -104,4 +104,4 @@ def create_project(
 
     except ValueError as e:
         console.print(f"\n[red]❌ Error: {e}[/red]")
-        raise SystemExit(1)
+        raise SystemExit(1) from e

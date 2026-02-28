@@ -253,13 +253,14 @@
 - **任务**:
   - [x] 完善 `pyproject.toml` 元数据
   - [x] 添加 `LICENSE` 文件
-  - [ ] 测试本地构建 `uv build`
-  - [ ] 测试 TestPyPI 发布
+  - [x] 测试本地构建 `uv build`
+  - [x] 添加 GitHub Actions CI 工作流
+  - [x] 添加 GitHub Actions 发布工作流
 - **Git Commit**: `chore: prepare for PyPI release`
 
 ### Issue #20: 发布 v0.1.0 MVP
 
-- **状态**: ⬜ TODO
+- **状态**: 🔄 IN PROGRESS
 - **描述**: 发布首个 MVP 版本
 - **任务**:
   - [ ] 创建 Git tag `v0.1.0`
