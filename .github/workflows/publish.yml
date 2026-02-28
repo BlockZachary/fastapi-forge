@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target repository'
+        description: "Target repository"
         required: true
-        default: 'testpypi'
+        default: "testpypi"
         type: choice
         options:
           - testpypi
