@@ -1,5 +1,5 @@
 [project]
-name = "pyforge-cli"
+name = "forgeapi"
 version = "0.1.0"
 description = "A highly modular FastAPI project scaffolding CLI tool for the AI application era"
 authors = [

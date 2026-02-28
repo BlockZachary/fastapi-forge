@@ -1,6 +1,6 @@
-# FastAPI-Forge 设计文档
+# ForgeAPI 设计文档
 
-> 🚀 **项目代号:** FastAPI-Forge  
+> 🚀 **项目代号:** ForgeAPI  
 > **版本:** v0.1.0 (MVP)  
 > **最后更新:** 2026年2月28日  
 > **作者:** Zachary
@@ -27,11 +27,11 @@
 
 ### 1.1 项目定位
 
-FastAPI-Forge 是一款高度模块化、面向 AI 应用时代的 FastAPI 项目脚手架 CLI 工具。它旨在解决开发者在创建 FastAPI 项目时面临的"重复造轮子"问题，提供一键生成包含 **鉴权 + Docker + 数据库 + LLM 集成** 的完整项目结构。
+ForgeAPI 是一款高度模块化、面向 AI 应用时代的 FastAPI 项目脚手架 CLI 工具。它旨在解决开发者在创建 FastAPI 项目时面临的"重复造轮子"问题，提供一键生成包含 **鉴权 + Docker + 数据库 + LLM 集成** 的完整项目结构。
 
 ### 1.2 核心价值主张
 
-| 痛点                             | FastAPI-Forge 解决方案      |
+| 痛点                             | ForgeAPI 解决方案      |
 | -------------------------------- | --------------------------- |
 | 现有模板太简单或太复杂           | 模块化选择，按需生成        |
 | 每次都要配置 Docker/Alembic/测试 | 开箱即用的最佳实践配置      |
@@ -87,7 +87,7 @@ FastAPI-Forge 是一款高度模块化、面向 AI 应用时代的 FastAPI 项�
 ### 3.1 CLI 工具技术栈
 
 ```
-fastapi-forge/
+forgeapi/
 ├── Python >= 3.10
 ├── Typer              # CLI 框架
 ├── Rich               # 终端美化输出
@@ -122,9 +122,9 @@ generated-project/
 
 ```bash
 # 安装
-pip install fastapi-forge
+pip install forgeapi
 # 或使用 uv
-uv pip install fastapi-forge
+uv pip install forgeapi
 
 # 主要命令
 forge create <project-name>    # 创建新项目
@@ -139,7 +139,7 @@ forge --help                   # 帮助信息
 ```
 $ forge create my-awesome-api
 
-🚀 FastAPI-Forge - 创建新项目
+🚀 ForgeAPI - 创建新项目
 
 ? 项目名称: my-awesome-api
 ? 项目描述: A awesome FastAPI project
@@ -191,7 +191,7 @@ $ forge create my-awesome-api
   uv run alembic upgrade head # 运行数据库迁移
   uv run python -m app.main  # 启动服务
 
-📚 文档: https://fastapi-forge.dev
+📚 文档: https://forgeapi.dev
 ```
 
 ### 4.3 命令行参数（非交互模式）
@@ -667,7 +667,7 @@ class {ModelName}(Base):
 支持多种 LLM 提供商：
 
 ```yaml
-# ~/.fastapi-forge/config.yaml
+# ~/.forgeapi/config.yaml
 ai:
   provider: openai  # openai, anthropic, ollama
   model: gpt-4
@@ -745,13 +745,13 @@ poetry publish
 
 ```bash
 # 推荐: 使用 pipx 全局安装
-pipx install fastapi-forge
+pipx install forgeapi
 
 # 或使用 uv
-uv tool install fastapi-forge
+uv tool install forgeapi
 
 # 或使用 pip
-pip install fastapi-forge
+pip install forgeapi
 ```
 
 ### 10.3 版本管理

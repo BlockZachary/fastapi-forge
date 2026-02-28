@@ -1,7 +1,7 @@
-# FastAPI-Forge 🚀
+# ForgeAPI 🚀
 
-[![PyPI version](https://badge.fury.io/py/fastapi-forge.svg)](https://badge.fury.io/py/fastapi-forge)
-[![Python](https://img.shields.io/pypi/pyversions/fastapi-forge.svg)](https://pypi.org/project/fastapi-forge/)
+[![PyPI version](https://badge.fury.io/py/forgeapi.svg)](https://badge.fury.io/py/forgeapi)
+[![Python](https://img.shields.io/pypi/pyversions/forgeapi.svg)](https://pypi.org/project/forgeapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > A highly modular FastAPI project scaffolding CLI tool for the AI application era.
@@ -21,13 +21,13 @@
 
 ```bash
 # Using pipx (recommended)
-pipx install fastapi-forge
+pipx install forgeapi
 
 # Using uv
-uv tool install fastapi-forge
+uv tool install forgeapi
 
 # Using pip
-pip install fastapi-forge
+pip install forgeapi
 ```
 
 ## 🚀 Quick Start
@@ -41,7 +41,7 @@ forge create my-awesome-api
 Follow the interactive prompts to configure your project:
 
 ```
-🚀 FastAPI-Forge - Create New Project
+🚀 ForgeAPI - Create New Project
 
 ? Project name: my-awesome-api
 ? Description: A awesome FastAPI project

@@ -1,6 +1,6 @@
-# Contributing to FastAPI-Forge
+# Contributing to ForgeAPI
 
-Thank you for your interest in contributing to FastAPI-Forge! 🎉
+Thank you for your interest in contributing to ForgeAPI! 🎉
 
 ## 📋 Table of Contents
 
@@ -21,8 +21,8 @@ By participating in this project, you agree to maintain a respectful and inclusi
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/fastapi-forge.git
-   cd fastapi-forge
+   git clone https://github.com/YOUR_USERNAME/forgeapi.git
+   cd forgeapi
    ```
 
 ## Development Setup
@@ -51,7 +51,7 @@ forge version
 ### Project Structure
 
 ```
-fastapi-forge/
+forgeapi/
 ├── fastapi_forge/           # Main package
 │   ├── __init__.py
 │   ├── cli.py               # CLI entry point
@@ -237,6 +237,6 @@ from app.core.database import get_db
 
 ## 🙏 Thank You!
 
-Your contributions help make FastAPI-Forge better for everyone. We appreciate your time and effort!
+Your contributions help make ForgeAPI better for everyone. We appreciate your time and effort!
 
 If you have any questions, feel free to open an issue or reach out to the maintainers.

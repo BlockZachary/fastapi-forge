@@ -1,5 +1,5 @@
 """
-FastAPI-Forge CLI - Command Line Interface
+ForgeAPI CLI - Command Line Interface
 
 This module provides the main CLI application using Typer.
 """
@@ -13,7 +13,7 @@ from fastapi_forge import __version__
 # Initialize Typer app
 app = typer.Typer(
     name="forge",
-    help="🚀 FastAPI-Forge - A highly modular FastAPI project scaffolding CLI tool",
+    help="🚀 ForgeAPI - A highly modular FastAPI project scaffolding CLI tool",
     add_completion=False,
     rich_markup_mode="rich",
 )
@@ -27,7 +27,7 @@ def version_callback(value: bool) -> None:
     if value:
         console.print(
             Panel(
-                f"[bold cyan]FastAPI-Forge[/bold cyan] version [green]{__version__}[/green]\n\n"
+                f"[bold cyan]ForgeAPI[/bold cyan] version [green]{__version__}[/green]\n\n"
                 f"🚀 A highly modular FastAPI project scaffolding CLI tool\n"
                 f"📚 Documentation: https://github.com/zachary/fastapi-forge",
                 title="Version Info",
@@ -49,7 +49,7 @@ def main(
     ),
 ) -> None:
     """
-    🚀 FastAPI-Forge - Create FastAPI projects with best practices.
+    🚀 ForgeAPI - Create FastAPI projects with best practices.
 
     A highly modular FastAPI project scaffolding CLI tool for the AI application era.
     Generate projects with Clean Architecture, Docker, Authentication, and more.
