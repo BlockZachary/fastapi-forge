@@ -119,8 +119,6 @@ forge add api User --crud
 
 ## 📚 Documentation
 
-- [Design Document](DESIGN.md)
-- [Development Tasks](TODO.md)
 - [Changelog](CHANGELOG.md)
 
 ## 🤝 Contributing
