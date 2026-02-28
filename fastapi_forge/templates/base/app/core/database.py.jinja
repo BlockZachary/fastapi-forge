@@ -1,0 +1,68 @@
+"""
+Database Utilities
+
+This module provides database connection and session management.
+"""
+
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+
+from app.config.env import DatabaseConfig
+
+
+class DatabaseUtil:
+    """Database utility class."""
+
+    @classmethod
+    async def init_engine(cls, config: DatabaseConfig) -> AsyncEngine:
+        """
+        Initialize async database engine.
+
+        Args:
+            config: Database configuration
+
+        Returns:
+            Async database engine
+        """
+        engine = create_async_engine(
+            config.database_url,
+            echo=config.echo,
+            pool_size=config.pool_size,
+            max_overflow=config.max_overflow,
+            pool_recycle=config.pool_recycle,
+            pool_timeout=config.pool_timeout,
+        )
+        return engine
+
+    @classmethod
+    async def close_engine(cls, engine: AsyncEngine) -> None:
+        """
+        Close database engine.
+
+        Args:
+            engine: Async database engine to close
+        """
+        await engine.dispose()
+
+    @classmethod
+    async def get_session(cls, engine: AsyncEngine):
+        """
+        Get async database session.
+
+        Args:
+            engine: Async database engine
+
+        Yields:
+            Async database session
+        """
+        async_session = async_sessionmaker(
+            engine,
+            class_=AsyncSession,
+            expire_on_commit=False,
+        )
+        async with async_session() as session:
+            yield session

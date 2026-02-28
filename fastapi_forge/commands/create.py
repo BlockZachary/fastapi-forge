@@ -4,9 +4,12 @@ Create Command - Project Creation Logic
 This module handles the 'forge create' command implementation.
 """
 
+from pathlib import Path
+
 from rich.console import Console
 from rich.panel import Panel
 
+from fastapi_forge.generator import ProjectGenerator
 from fastapi_forge.models import (
     DatabaseType,
     PackageManager,
@@ -75,10 +78,28 @@ def create_project(
             )
         )
 
-        # TODO: Implement project generation (Issue #12)
+        # Generate the project
+        output_dir = Path.cwd() / config.project_slug
+        generator = ProjectGenerator(config, output_dir)
+        
+        with console.status("[bold blue]Generating project...[/bold blue]"):
+            generated_files = generator.generate()
+        
+        # Display success message
         console.print(
-            "\n[yellow]⚠️  Project generation not yet implemented.[/yellow]\n"
-            "This will be completed in Issue #12.\n"
+            Panel(
+                f"[bold green]🚀 Project created successfully![/bold green]\n\n"
+                f"Location: [cyan]{output_dir}[/cyan]\n"
+                f"Files generated: [cyan]{len(generated_files)}[/cyan]\n\n"
+                f"[bold]Next steps:[/bold]\n"
+                f"  cd {config.project_slug}\n"
+                + (f"  uv sync\n" if config.package_manager == PackageManager.UV else "")
+                + (f"  poetry install\n" if config.package_manager == PackageManager.POETRY else "")
+                + (f"  pip install -r requirements.txt\n" if config.package_manager == PackageManager.PIP else "")
+                + f"  {'uv run ' if config.package_manager == PackageManager.UV else 'poetry run ' if config.package_manager == PackageManager.POETRY else ''}uvicorn app.main:app --reload",
+                title="Success",
+                border_style="green",
+            )
         )
 
     except ValueError as e:

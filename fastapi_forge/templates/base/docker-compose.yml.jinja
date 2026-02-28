@@ -1,0 +1,117 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+{% if use_database or use_redis %}
+    depends_on:
+{% if "postgres" in docker_services %}
+      - postgres
+{% endif %}
+{% if "mysql" in docker_services %}
+      - mysql
+{% endif %}
+{% if "redis" in docker_services %}
+      - redis
+{% endif %}
+{% endif %}
+    volumes:
+      - .:/app
+    command: python -m app.main
+{% if use_database or use_redis %}
+    networks:
+      - app-network
+{% endif %}
+
+{% if "postgres" in docker_services %}
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: {{ project_slug }}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+{% endif %}
+
+{% if "mysql" in docker_services %}
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: {{ project_slug }}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+{% endif %}
+
+{% if "redis" in docker_services %}
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+{% endif %}
+
+{% if "rabbitmq" in docker_services %}
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app-network
+{% endif %}
+
+{% if "minio" in docker_services %}
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    networks:
+      - app-network
+{% endif %}
+
+{% if use_database or use_redis %}
+volumes:
+{% if "postgres" in docker_services %}
+  postgres_data:
+{% endif %}
+{% if "mysql" in docker_services %}
+  mysql_data:
+{% endif %}
+{% if "rabbitmq" in docker_services %}
+  rabbitmq_data:
+{% endif %}
+{% if "minio" in docker_services %}
+  minio_data:
+{% endif %}
+
+networks:
+  app-network:
+    driver: bridge
+{% endif %}

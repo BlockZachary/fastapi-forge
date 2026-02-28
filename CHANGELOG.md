@@ -19,7 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `PackageManager` enum (uv, poetry, pip)
 - `DatabaseType` enum (postgres, mysql, sqlite, none)
 - Non-interactive mode support (`-y` / `--no-interactive` flag)
-- Unit tests for CLI and models (20 tests passing)
+- Jinja2 template engine for project generation (`generator.py`)
+- Complete base project templates:
+  - FastAPI application structure (api, core, services, daos, models, schemas)
+  - SQLAlchemy 2.0 async database configuration
+  - Alembic migration setup
+  - JWT authentication module
+  - Redis integration
+  - Docker and docker-compose configuration
+  - Pytest testing framework with conftest.py
+  - Ruff linter configuration
+  - GitHub Actions CI workflow
+  - VS Code configuration (settings, launch, extensions)
+- Unit tests for CLI, models, and generator (31 tests passing)
 
 ## [0.1.0] - TBD
 

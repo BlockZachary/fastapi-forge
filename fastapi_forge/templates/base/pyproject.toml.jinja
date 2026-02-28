@@ -1,0 +1,86 @@
+[project]
+name = "{{ project_slug }}"
+version = "0.1.0"
+description = "{{ project_description }}"
+authors = [
+    { name = "{{ author_name }}", email = "{{ author_email }}" }
+]
+readme = "README.md"
+requires-python = ">={{ python_version }}"
+
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "uvicorn>=0.34.0",
+    "pyyaml>=6.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+{% if use_database %}
+    "sqlalchemy[asyncio]>=2.0.0",
+{% endif %}
+{% if use_postgres %}
+    "asyncpg>=0.29.0",
+    "psycopg[binary]>=3.2.0",
+{% elif use_mysql %}
+    "aiomysql>=0.2.0",
+{% elif use_sqlite %}
+    "aiosqlite>=0.20.0",
+{% endif %}
+{% if use_alembic %}
+    "alembic>=1.15.0",
+{% endif %}
+{% if use_redis %}
+    "redis>=5.2.0",
+{% endif %}
+{% if use_auth %}
+    "pyjwt>=2.10.0",
+    "passlib[bcrypt]>=1.7.4",
+    "bcrypt==4.0.1",
+{% endif %}
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.26.0",
+{% if use_ruff %}
+    "ruff>=0.11.0",
+{% endif %}
+{% if use_redis %}
+    "fakeredis>=2.27.0",
+{% endif %}
+{% if use_postgres %}
+    "pytest-postgresql>=4.1.0",
+{% endif %}
+]
+
+[project.scripts]
+start = "app.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+{% if use_ruff %}
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py{{ python_version | replace('.', '') }}"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+{% endif %}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"

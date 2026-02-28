@@ -1,0 +1,99 @@
+"""
+FastAPI Application Server
+
+This module configures and creates the FastAPI application instance.
+"""
+
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+from app.api.health_api import healthAPI
+{% if use_auth %}
+from app.api.auth_api import authAPI
+{% endif %}
+from app.core.config import get_config
+{% if use_database %}
+from app.core.database import DatabaseUtil
+{% endif %}
+{% if use_redis %}
+from app.core.redis import RedisUtil
+{% endif %}
+from app.exceptions.handler import register_exception_handlers
+from app.utils.log import log
+
+config = get_config()
+
+
+async def init_services(app: FastAPI):
+    """
+    Initialize application services.
+
+    Args:
+        app: FastAPI application instance
+    """
+    app.state.config = config
+{% if use_database %}
+    app.state.db_engine = await DatabaseUtil.init_engine(config.db)
+{% endif %}
+{% if use_redis %}
+    app.state.redis = await RedisUtil.init_redis(config.redis)
+{% endif %}
+
+
+async def close_services(app: FastAPI):
+    """
+    Close application services.
+
+    Args:
+        app: FastAPI application instance
+    """
+{% if use_database %}
+    await DatabaseUtil.close_engine(app.state.db_engine)
+{% endif %}
+{% if use_redis %}
+    await RedisUtil.close_redis(app.state.redis)
+{% endif %}
+    pass
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Application lifespan manager.
+
+    Args:
+        app: FastAPI application instance
+    """
+    # Startup
+    await init_services(app)
+    log.info(f"{config.app.name} started successfully")
+
+    yield
+
+    # Shutdown
+    await close_services(app)
+    log.info(f"{config.app.name} shutdown complete")
+
+
+# Create FastAPI application
+app = FastAPI(
+    title=config.app.name,
+    description=config.app.description,
+    version=config.app.version,
+    lifespan=lifespan,
+)
+
+# Register exception handlers
+register_exception_handlers(app)
+
+# Register routers
+API_ROUTES = [
+    {"router": healthAPI, "tags": ["Health"]},
+{% if use_auth %}
+    {"router": authAPI, "tags": ["Authentication"]},
+{% endif %}
+]
+
+for route in API_ROUTES:
+    app.include_router(router=route["router"], tags=route["tags"])

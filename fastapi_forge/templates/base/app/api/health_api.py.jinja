@@ -1,0 +1,41 @@
+"""
+Health Check API
+
+This module provides health check endpoints for monitoring.
+"""
+
+from fastapi import APIRouter
+
+from app.core.config import get_config
+from app.schemas.api_schema import HealthResponse
+
+config = get_config()
+healthAPI = APIRouter(prefix=f"{config.app.api}/health")
+
+
+@healthAPI.get("", response_model=HealthResponse)
+async def health_check():
+    """
+    Health check endpoint.
+
+    Returns:
+        Health status response
+    """
+    return HealthResponse(
+        status="healthy",
+        version=config.app.version,
+    )
+
+
+@healthAPI.get("/ready", response_model=HealthResponse)
+async def readiness_check():
+    """
+    Readiness check endpoint.
+
+    Returns:
+        Readiness status response
+    """
+    return HealthResponse(
+        status="ready",
+        version=config.app.version,
+    )

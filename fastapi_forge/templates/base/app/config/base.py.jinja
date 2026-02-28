@@ -1,0 +1,52 @@
+"""
+Base Configuration Classes
+
+This module defines the base configuration classes for different environments.
+"""
+
+from pydantic_settings import BaseSettings
+
+from app.config.env import AppConfig
+{% if use_database %}
+from app.config.env import DatabaseConfig
+{% endif %}
+{% if use_redis %}
+from app.config.env import RedisConfig
+{% endif %}
+{% if use_auth %}
+from app.config.env import JwtConfig
+{% endif %}
+
+
+class BaseConfig(BaseSettings):
+    """Base configuration for all environments."""
+
+    env: str
+    app: AppConfig
+{% if use_database %}
+    db: DatabaseConfig
+{% endif %}
+{% if use_redis %}
+    redis: RedisConfig
+{% endif %}
+{% if use_auth %}
+    jwt: JwtConfig
+{% endif %}
+
+
+class DevConfig(BaseConfig):
+    """Development environment configuration."""
+
+    pass
+
+
+class StagingConfig(BaseConfig):
+    """Staging environment configuration."""
+
+    pass
+
+
+class ProdConfig(BaseConfig):
+    """Production environment configuration."""
+
+    pass

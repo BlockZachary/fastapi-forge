@@ -1,0 +1,72 @@
+"""
+Authentication API
+
+This module provides authentication endpoints for user login/logout.
+"""
+
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordRequestForm
+{% if use_database %}
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.deps import get_db_session
+{% endif %}
+from app.core.config import get_config
+from app.core.auth import AuthHandler
+from app.schemas.auth_schema import TokenResponse
+from app.utils.log import log
+
+config = get_config()
+authAPI = APIRouter(prefix=f"{config.app.api}/auth")
+
+
+@authAPI.post("/login", response_model=TokenResponse)
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+{% if use_database %}
+    db_session: AsyncSession = Depends(get_db_session),
+{% endif %}
+):
+    """
+    User login endpoint.
+
+    Args:
+        form_data: OAuth2 password request form with username and password
+{% if use_database %}
+        db_session: Database session
+{% endif %}
+
+    Returns:
+        JWT access token on successful authentication
+    """
+    # TODO: Implement actual authentication logic
+    # This is a placeholder - replace with real user validation
+
+    # For demo purposes, accept any credentials
+    log.info(f"Login attempt for user: {form_data.username}")
+
+    # Generate access token
+    access_token = AuthHandler.create_access_token({"sub": form_data.username})
+
+    return TokenResponse(
+        access_token=access_token,
+        token_type="bearer",
+    )
+
+
+@authAPI.post("/logout")
+async def logout():
+    """
+    User logout endpoint.
+
+    Returns:
+        Success message
+    """
+    # TODO: Implement token invalidation if needed
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"message": "Logged out successfully"},
+    )

@@ -1,0 +1,71 @@
+env: dev
+
+# Development environment
+dev:
+  app:
+    name: {{ project_name }} (dev)
+    description: {{ project_description }}
+    api: /api
+    host: 0.0.0.0
+    port: 8000
+    uvicorn: app.server:app
+    version: 0.1.0
+    reload: true
+
+{% if use_database %}
+  db:
+{% if use_postgres %}
+    host: localhost
+    port: 5432
+    user: postgres
+    password: postgres
+    database: {{ project_slug }}
+    driver_name: postgresql+asyncpg
+{% elif use_mysql %}
+    host: localhost
+    port: 3306
+    user: root
+    password: root
+    database: {{ project_slug }}
+    driver_name: mysql+aiomysql
+{% elif use_sqlite %}
+    host: ""
+    port: 0
+    user: ""
+    password: ""
+    database: {{ project_slug }}.db
+    driver_name: sqlite+aiosqlite
+{% endif %}
+    echo: true
+    pool_size: 5
+    max_overflow: 10
+    pool_recycle: 3600
+    pool_timeout: 30
+{% endif %}
+
+{% if use_redis %}
+  redis:
+    host: localhost
+    port: 6379
+    db: 0
+    password: ""
+{% endif %}
+
+{% if use_auth %}
+  jwt:
+    secret_key: your-secret-key-change-in-production
+    algorithm: HS256
+    expire_minutes: 1440
+{% endif %}
+
+# Production environment
+prod:
+  app:
+    name: {{ project_name }}
+    reload: false
+
+{% if use_database %}
+  db:
+    echo: false
+    pool_size: 20
+{% endif %}

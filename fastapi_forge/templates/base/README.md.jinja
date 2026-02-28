@@ -1,0 +1,141 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python {{ python_version }}+
+{% if use_uv %}
+- [uv](https://docs.astral.sh/uv/) (recommended)
+{% elif use_poetry %}
+- [Poetry](https://python-poetry.org/)
+{% endif %}
+{% if use_docker %}
+- Docker & Docker Compose
+{% endif %}
+
+### Installation
+
+{% if use_uv %}
+```bash
+# Install dependencies
+uv sync
+
+# Activate virtual environment
+source .venv/bin/activate
+```
+{% elif use_poetry %}
+```bash
+# Install dependencies
+poetry install
+
+# Activate virtual environment
+poetry shell
+```
+{% else %}
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+{% endif %}
+
+{% if use_docker_compose %}
+### Running with Docker
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+```
+{% endif %}
+
+### Running Locally
+
+{% if use_alembic %}
+```bash
+# Run database migrations
+{% if use_uv %}
+uv run alembic upgrade head
+{% elif use_poetry %}
+poetry run alembic upgrade head
+{% else %}
+alembic upgrade head
+{% endif %}
+```
+{% endif %}
+
+```bash
+# Start the development server
+{% if use_uv %}
+uv run python -m app.main
+{% elif use_poetry %}
+poetry run python -m app.main
+{% else %}
+python -m app.main
+{% endif %}
+```
+
+The API will be available at http://localhost:8000
+
+- 📚 API Documentation: http://localhost:8000/docs
+- 📖 ReDoc: http://localhost:8000/redoc
+
+## 📁 Project Structure
+
+```
+{{ project_name }}/
+├── app/
+│   ├── api/           # API routes
+│   ├── config/        # Configuration
+│   ├── core/          # Core utilities
+{% if use_database %}
+│   ├── daos/          # Data Access Objects
+{% endif %}
+│   ├── exceptions/    # Exception handlers
+{% if use_database %}
+│   ├── models/        # SQLAlchemy models
+{% endif %}
+│   ├── schemas/       # Pydantic schemas
+│   ├── services/      # Business logic
+│   └── utils/         # Utilities
+{% if use_alembic %}
+├── alembic/           # Database migrations
+{% endif %}
+├── tests/             # Test suite
+{% if use_docker %}
+├── Dockerfile
+{% endif %}
+{% if use_docker_compose %}
+├── docker-compose.yml
+{% endif %}
+├── pyproject.toml
+└── README.md
+```
+
+## 🧪 Testing
+
+```bash
+{% if use_uv %}
+uv run pytest
+{% elif use_poetry %}
+poetry run pytest
+{% else %}
+pytest
+{% endif %}
+```
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+Generated with ❤️ by [FastAPI-Forge](https://github.com/zachary/fastapi-forge)

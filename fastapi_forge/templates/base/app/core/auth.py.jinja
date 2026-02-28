@@ -1,0 +1,96 @@
+"""
+Authentication Handler
+
+This module provides JWT token creation and validation utilities.
+"""
+
+from datetime import datetime, timedelta, timezone
+
+import jwt
+from passlib.context import CryptContext
+
+from app.core.config import get_config
+
+config = get_config()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+class AuthHandler:
+    """Authentication handler for JWT operations."""
+
+    @staticmethod
+    def hash_password(password: str) -> str:
+        """
+        Hash a password using bcrypt.
+
+        Args:
+            password: Plain text password
+
+        Returns:
+            Hashed password
+        """
+        return pwd_context.hash(password)
+
+    @staticmethod
+    def verify_password(plain_password: str, hashed_password: str) -> bool:
+        """
+        Verify a password against its hash.
+
+        Args:
+            plain_password: Plain text password
+            hashed_password: Hashed password
+
+        Returns:
+            True if password matches, False otherwise
+        """
+        return pwd_context.verify(plain_password, hashed_password)
+
+    @staticmethod
+    def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
+        """
+        Create a JWT access token.
+
+        Args:
+            data: Data to encode in the token
+            expires_delta: Optional expiration time delta
+
+        Returns:
+            Encoded JWT token
+        """
+        to_encode = data.copy()
+
+        if expires_delta:
+            expire = datetime.now(timezone.utc) + expires_delta
+        else:
+            expire = datetime.now(timezone.utc) + timedelta(
+                minutes=config.jwt.expire_minutes
+            )
+
+        to_encode.update({"exp": expire})
+        encoded_jwt = jwt.encode(
+            to_encode,
+            config.jwt.secret_key,
+            algorithm=config.jwt.algorithm,
+        )
+        return encoded_jwt
+
+    @staticmethod
+    def decode_token(token: str) -> dict | None:
+        """
+        Decode a JWT token.
+
+        Args:
+            token: JWT token to decode
+
+        Returns:
+            Decoded token data or None if invalid
+        """
+        try:
+            payload = jwt.decode(
+                token,
+                config.jwt.secret_key,
+                algorithms=[config.jwt.algorithm],
+            )
+            return payload
+        except jwt.PyJWTError:
+            return None

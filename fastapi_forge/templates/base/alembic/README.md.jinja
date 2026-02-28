@@ -1,0 +1,43 @@
+# Database Migrations
+
+This directory contains Alembic database migration scripts.
+
+## Commands
+
+```bash
+# Create a new migration
+{% if use_uv %}
+uv run alembic revision --autogenerate -m "description"
+{% elif use_poetry %}
+poetry run alembic revision --autogenerate -m "description"
+{% else %}
+alembic revision --autogenerate -m "description"
+{% endif %}
+
+# Apply migrations
+{% if use_uv %}
+uv run alembic upgrade head
+{% elif use_poetry %}
+poetry run alembic upgrade head
+{% else %}
+alembic upgrade head
+{% endif %}
+
+# Rollback one migration
+{% if use_uv %}
+uv run alembic downgrade -1
+{% elif use_poetry %}
+poetry run alembic downgrade -1
+{% else %}
+alembic downgrade -1
+{% endif %}
+
+# Show migration history
+{% if use_uv %}
+uv run alembic history
+{% elif use_poetry %}
+poetry run alembic history
+{% else %}
+alembic history
+{% endif %}
+```

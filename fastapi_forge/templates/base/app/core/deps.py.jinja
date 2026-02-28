@@ -1,0 +1,55 @@
+"""
+FastAPI Dependencies
+
+This module provides dependency injection utilities for FastAPI.
+"""
+
+from fastapi import Request
+{% if use_database %}
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+
+from app.core.database import DatabaseUtil
+{% endif %}
+
+{% if use_database %}
+
+def get_db_engine(request: Request) -> AsyncEngine:
+    """
+    Get database engine from request state.
+
+    Args:
+        request: FastAPI request object
+
+    Returns:
+        Async database engine
+    """
+    return request.app.state.db_engine
+
+
+async def get_db_session(request: Request) -> AsyncSession:
+    """
+    Get database session.
+
+    Args:
+        request: FastAPI request object
+
+    Yields:
+        Async database session
+    """
+    engine = get_db_engine(request)
+    async for session in DatabaseUtil.get_session(engine):
+        yield session
+{% endif %}
+
+
+def get_config(request: Request):
+    """
+    Get application configuration from request state.
+
+    Args:
+        request: FastAPI request object
+
+    Returns:
+        Application configuration
+    """
+    return request.app.state.config

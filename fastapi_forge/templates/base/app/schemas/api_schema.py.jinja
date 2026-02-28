@@ -1,0 +1,20 @@
+"""
+API Schemas
+
+This module defines common API response schemas.
+"""
+
+from pydantic import BaseModel, Field
+
+
+class MessageResponse(BaseModel):
+    """Generic message response schema."""
+
+    message: str = Field(..., description="Response message")
+
+
+class HealthResponse(BaseModel):
+    """Health check response schema."""
+
+    status: str = Field(..., description="Health status")
+    version: str = Field(..., description="Application version")

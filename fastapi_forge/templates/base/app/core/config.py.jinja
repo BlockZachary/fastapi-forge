@@ -1,0 +1,56 @@
+"""
+Configuration Loader
+
+This module handles loading configuration from YAML files.
+"""
+
+from functools import lru_cache
+from pathlib import Path
+
+import yaml
+
+from app.config.base import BaseConfig, DevConfig, StagingConfig, ProdConfig
+
+
+def get_project_path() -> Path:
+    """Get the project root path."""
+    return Path(__file__).parent.parent.parent
+
+
+@lru_cache()
+def get_config(config_file: str = "config.yaml", env: str | None = None) -> BaseConfig:
+    """
+    Get configuration for the specified environment.
+
+    Args:
+        config_file: Path to the configuration file
+        env: Environment name (dev, staging, prod)
+
+    Returns:
+        Configuration object for the specified environment
+    """
+    project_path = get_project_path()
+    config_path = project_path / config_file
+
+    with open(config_path, "r", encoding="utf-8") as f:
+        yaml_config = yaml.safe_load(f)
+
+    # Get environment from config or parameter
+    if env:
+        yaml_config["env"] = env
+    else:
+        env = yaml_config.get("env", "dev")
+
+    # Get environment-specific config
+    env_config = yaml_config.get(env, {})
+    env_config["env"] = env
+
+    # Select configuration class based on environment
+    config_classes = {
+        "dev": DevConfig,
+        "staging": StagingConfig,
+        "prod": ProdConfig,
+    }
+
+    config_class = config_classes.get(env, DevConfig)
+    return config_class(**env_config)

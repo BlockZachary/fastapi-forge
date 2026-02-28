@@ -1,0 +1,24 @@
+"""
+Application Entry Point
+
+This module provides the main entry point for running the application.
+"""
+
+import uvicorn
+
+from app.core.config import get_config
+
+
+def main():
+    """Run the application with uvicorn."""
+    config = get_config()
+    uvicorn.run(
+        config.app.uvicorn,
+        host=config.app.host,
+        port=config.app.port,
+        reload=config.app.reload,
+    )
+
+
+if __name__ == "__main__":
+    main()

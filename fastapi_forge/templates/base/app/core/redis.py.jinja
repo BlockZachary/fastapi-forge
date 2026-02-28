@@ -1,0 +1,41 @@
+"""
+Redis Utilities
+
+This module provides Redis connection management.
+"""
+
+import redis.asyncio as redis
+
+from app.config.env import RedisConfig
+
+
+class RedisUtil:
+    """Redis utility class."""
+
+    @classmethod
+    async def init_redis(cls, config: RedisConfig) -> redis.Redis:
+        """
+        Initialize Redis connection.
+
+        Args:
+            config: Redis configuration
+
+        Returns:
+            Redis client instance
+        """
+        client = redis.from_url(
+            config.redis_url,
+            encoding="utf-8",
+            decode_responses=True,
+        )
+        return client
+
+    @classmethod
+    async def close_redis(cls, client: redis.Redis) -> None:
+        """
+        Close Redis connection.
+
+        Args:
+            client: Redis client to close
+        """
+        await client.aclose()
